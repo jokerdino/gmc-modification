@@ -147,9 +147,12 @@ print("=============================\nFINAL OUTPUT COUNT\n",output_summary)
 print("Name corrections, Name & DOB corrections and DOB corrections have been made. Please make all other types of corrections manually. :(")
 
 # printing summary of entries where there is no age difference between core data and brokers' data
-output_summary_noagediff = pd.pivot_table(df_noagediff,index='Remarks', values= 'Emp id', aggfunc='count')
-output_summary_noagediff.loc['Total'] = output_summary_noagediff.sum(numeric_only=True,axis=0)
-print("=============================\nNO AGE DIFFERENCE COUNT\n",output_summary_noagediff)
+if not df_noagediff.empty:
+    output_summary_noagediff = pd.pivot_table(df_noagediff,index='Remarks', values= 'Emp id', aggfunc='count')
+    output_summary_noagediff.loc['Total'] = output_summary_noagediff.sum(numeric_only=True,axis=0)
+    print("=============================\nNO AGE DIFFERENCE COUNT\n",output_summary_noagediff)
+else:
+    print("All DOB correction entries were made. There were no entries where difference between existing age and newly calculated age was zero.")
 
 # not available in core here
 
@@ -170,6 +173,6 @@ if not df_not_match.empty:
     output_summary_fuzzy_nomatch = pd.pivot_table(df_not_match,index='Remarks', values= 'Emp id', aggfunc='count')
     output_summary_fuzzy_nomatch.loc['Total'] = output_summary_fuzzy_nomatch.sum(numeric_only=True,axis=0)
     print("=============================\nFUZZY NO MATCH -NAME NOT MATCHING IN CORE DATA\n",output_summary_fuzzy_nomatch)
-    print("For employees with multiple sons and/or daughters, if there is correction to be made for one of the son/daughter, \nthe other son/daughter entry will be removed based on fuzzy match. \nPlease have a look into the file to confirm the fuzzy match has been successful. \nIf script has incorrectly removed the entry, please manually modify the \"Name column\" in brokers' data and rerun the script for correct results.")
+    print("For employees with multiple sons and/or daughters, if there is correction to be made for one of the son/daughter, \nthe other son/daughter entry will be removed based on fuzzy match. \nPlease have a look into the file to confirm the fuzzy match has been successful. \nIf script has incorrectly removed the entry, please manually modify the \"Name\" column in brokers' data and rerun the script for correct results.")
 else:
     print("All input entries were matched based on fuzzy data.")

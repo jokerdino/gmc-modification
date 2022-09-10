@@ -19,6 +19,22 @@ title: Steps for processing modification endorsement
     - If there are any duplicate entries, we can remove them or keep them aside for further clarifications from the brokers / insureds. 
     - Save them in "duplicate entries.xlsx" or other suitable filename as required.
 4. If there are any top rows in the correction data file, remove them as it may disrupt our script functioning.
+5. Make sure the top row with the column headers are named as below:
+
+Table 1: Sample table headings from brokers' data
+
+|Emp. No.| Self/Dependent name|Relation|Correct Details|Correction      |
+|:-------|:-------------------|:-------|:--------------|:---------------|
+|1001    |Alice               |Spouse  |Alice B        |Name correction |
+|1002    |Bob                 |Son     |01-01-2022     |DOB correction  |
+
+
+Table 2: Preferred table headings
+
+|Emp id|Name |Relationship|Correct Name|Remarks        |
+|:-----|:----|:-----------|:-----------|:--------------|
+|1001  |Alice|Spouse      |Alice B     |Name correction|
+|1002  |Bob  |Son         |01-01-2022  |DOB correction |
 
 # Running the script
 1. Run our python script "modification.py".
