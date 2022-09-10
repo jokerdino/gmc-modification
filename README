@@ -1,0 +1,36 @@
+---
+title: Steps for processing modification endorsement
+---
+
+# Saving the input data
+
+
+1. Download core data -- save it as "Base data.csv"
+2. Download correction data from brokers - save it as "Correction data.xlsx"
+
+
+# Cleaning the input data
+1. Open "Base data.csv" and clean up the entries. 
+    - Mainly, combine the data rows which are split to multiple rows. Combine them into single row for proper processing.
+
+2. Now open the "Correction data.xlsx" and sort the data by employee ID.
+3. Manually identify any dubious or duplicate entries which are repeating. 
+    - This is easier to catch if the data is sorted by employee ID. 
+    - If there are any duplicate entries, we can remove them or keep them aside for further clarifications from the brokers / insureds. 
+    - Save them in "duplicate entries.xlsx" or other suitable filename as required.
+4. If there are any top rows in the correction data file, remove them as it may disrupt our script functioning.
+
+# Running the script
+1. Run our python script "modification.py".
+2. The script will give six output files in csv format
+    - output_step1 - Intermediate output being exported to csv for reference.
+    - output_step2 - Second intermediate output being exported to csv for reference.
+    - output_not_available_in_core - Entries which are not available in Core but available in brokers' data are exported to this file. Please confirm manually if these entries are present. If they are present, manually modify the brokers' data - Emp ID column and Relationship column and re-run the script.
+    - output_fuzzy_not_matching - Entries where an employee has multiple sons/daughters and correction has to be made for one of the son/daughter. The other son/daughter who has no correction will be exported to this file for reference. Please manually verify this file and confirm the correctness.
+    - output_no_age_diff - Entries where existing age in the core dat and the newly calculated age are same. As our system will not accept such entries, we are exporting to a file for reference.
+    - output_final - Final output which is prepared by script. Any correction other than name, DOB and name & DOB such as "Gender correction" has to be manually made as of now.
+
+# Further processing after script
+1. Summary will be given as output by script. Confirm if the numbers add up.
+    - Any discrepancy in the numbers have to be manually investigated.
+2. Gender correction and such other corrections have to be manually made.
