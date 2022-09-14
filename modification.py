@@ -78,7 +78,8 @@ df_corrections["Correct Name"] = df_corrections["Correct Name"].str.replace(" / 
 # Hopefully brokers' data is in the format NAME & DOB.
 # Otherwise, manually convert brokers' data in that format. :(
 
-df_corrections[["Correct Name","DOB"]] = df_corrections["Correct Name"].str.split(" & ",expand=True)
+if df_corrections['Correct Name'].str.contains('&').any():
+    df_corrections[["Correct Name","DOB"]] = df_corrections["Correct Name"].str.split(" & ",expand=True)
 
 # If corrections remarks states "DOB Correction", copy the DOB value to newly created DOB column
 df_corrections.loc[df_corrections.Remarks == "DOB CORRECTION", "DOB"] = df_corrections["Correct Name"]
